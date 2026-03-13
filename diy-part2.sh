@@ -18,3 +18,18 @@ sed -i '/encryption=psk2/a \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set wireless.default_
 
 # 5. 替换默认主题为 Argon
 sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
+
+# 6. 预下载 OpenClash 内核
+mkdir -p package/luci-app-openclash/root/etc/openclash/core
+
+# 7. 设置内核下载地址 (使用 Meta/Mihomo 内核，适配 360T7 的 ARMv8 架构)
+CORE_URL="https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-arm64.tar.gz"
+
+# 8. 下载并解压
+curl -sL $CORE_URL -o /tmp/clash_meta.tar.gz
+tar -zxf /tmp/clash_meta.tar.gz -C /tmp
+# 9. 重命名并移动到插件目录
+mv /tmp/clash package/luci-app-openclash/root/etc/openclash/core/clash_meta
+
+# 10.赋予可执行权限
+chmod +x package/luci-app-openclash/root/etc/openclash/core/clash_meta
