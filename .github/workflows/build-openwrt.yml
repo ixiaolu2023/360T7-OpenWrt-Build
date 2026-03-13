@@ -3,6 +3,9 @@ name: Build 360T7 OpenWrt
 on:
   repository_dispatch:
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt
